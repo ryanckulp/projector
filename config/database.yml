@@ -5,12 +5,12 @@ default: &default
 
 development:
   <<: *default
-  database: scratch_dev
+  database: projector_dev
 
 test:
   <<: *default
-  database: scratch_test
+  database: projector_test
 
 production:
   <<: *default
-  database: scratch_prod
+  database: projector_prod

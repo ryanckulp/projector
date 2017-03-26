@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Scratch
+module Projector
   class Application < Rails::Application
     config.autoload_paths << Rails.root.join('lib') # adds Lib folder to autoloaded files
     config.autoload_paths += %W(#{config.root}/app/services)
@@ -20,16 +20,6 @@ module Scratch
       :port => 587,
       :authentication => :plain,
       :enable_starttls_auto => true
-    }
-
-    # paperclip
-    config.paperclip_defaults = {
-      storage: :s3,
-      s3_credentials: {
-          bucket: ENV['AWS_BUCKET'],
-          access_key_id: ENV['AWS_ACCESS'],
-          secret_access_key: ENV['AWS_SECRET']
-      }
     }
 
     config.active_record.raise_in_transactional_callbacks = true

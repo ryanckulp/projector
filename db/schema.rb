@@ -10,10 +10,77 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150913110734) do
+ActiveRecord::Schema.define(version: 20170307030915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cards", force: :cascade do |t|
+    t.string   "name"
+    t.float    "cursor_size"
+    t.float    "width"
+    t.float    "height"
+    t.text     "background_image"
+    t.text     "foreground_image"
+    t.text     "win_text"
+    t.text     "lose_text"
+    t.json     "expiration"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "email_templates", force: :cascade do |t|
+    t.string   "template_type"
+    t.string   "subject"
+    t.text     "body"
+    t.integer  "card_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["card_id"], name: "index_email_templates_on_card_id", using: :btree
+  end
+
+  create_table "offers", force: :cascade do |t|
+    t.float    "win_probability"
+    t.json     "instructions"
+    t.integer  "max_wins"
+    t.json     "max_plays_player"
+    t.json     "coupon"
+    t.integer  "card_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["card_id"], name: "index_offers_on_card_id", using: :btree
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.string   "email_address"
+    t.string   "ip_address"
+    t.string   "first_name"
+    t.integer  "plays"
+    t.datetime "last_played_at"
+    t.integer  "card_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["card_id"], name: "index_players_on_card_id", using: :btree
+  end
+
+  create_table "stats", force: :cascade do |t|
+    t.string   "stat_type"
+    t.string   "ip_address"
+    t.text     "browser"
+    t.text     "referrer_url"
+    t.integer  "offer_id"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["offer_id"], name: "index_stats_on_offer_id", using: :btree
+    t.index ["user_id"], name: "index_stats_on_user_id", using: :btree
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -28,8 +95,20 @@ ActiveRecord::Schema.define(version: 20150913110734) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.json     "settings"
+    t.string   "stripe_customer_id"
+    t.integer  "team_id"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["team_id"], name: "index_users_on_team_id", using: :btree
   end
 
+  add_foreign_key "email_templates", "cards"
+  add_foreign_key "offers", "cards"
+  add_foreign_key "players", "cards"
+  add_foreign_key "stats", "offers"
+  add_foreign_key "stats", "users"
+  add_foreign_key "users", "teams"
 end
