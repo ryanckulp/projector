@@ -1,0 +1,6 @@
+<%= simple_form_for(@project) do |f| %>
+  <%= f.input :name, placeholder: 'Awesome Project' %>
+  <%= f.input :website, as: :url, placeholder: 'https://somethingcool.com' %>
+  <%= f.input :product_hunt_url, as: :url, label: "Product Hunt URL (optional)", placeholder: "https://producthunt.com/posts/my-awesome-launch" %>
+  <%= f.submit 'Add', class: 'btn btn-success pull-right' %>
+<% end %>

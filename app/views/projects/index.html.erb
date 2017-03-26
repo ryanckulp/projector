@@ -1,0 +1,14 @@
+<h3>Your Projects</h3><br>
+
+<% @projects.each do |project| %>
+  <div class="col-md-3">
+    <div class="project-tile">
+      <%= image_tag project.avatar_url, class: 'img img-responsive' if project.avatar_url? %>
+      <p><%= project.name %></p>
+      <p><%= link_to "configure", event_configuration_path %>
+    </div>
+  </div>
+<% end %>
+
+<div class="row gap"></div>
+<%= link_to "add project", new_project_path, class: 'btn btn-primary pull-right' %>
