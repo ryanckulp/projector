@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   resources :projects
+  resources :suggestions
   resources :events
   get 'events/configure', as: 'event_configuration'
 
