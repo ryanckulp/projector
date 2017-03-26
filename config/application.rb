@@ -11,6 +11,13 @@ module Projector
     config.autoload_paths << Rails.root.join('lib') # adds Lib folder to autoloaded files
     config.autoload_paths += %W(#{config.root}/app/services)
 
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
+
     # sendgrid
     ActionMailer::Base.smtp_settings = {
       :user_name => ENV['SENDGRID_USERNAME'],
