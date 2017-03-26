@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   belongs_to :user
+  has_many :events, dependent: :destroy
 
   before_create :generate_client_id
 

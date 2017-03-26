@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
 
   has_many :projects, dependent: :destroy
   has_many :events, through: :projects
+  has_many :suggestions, dependent: :destroy
 end
