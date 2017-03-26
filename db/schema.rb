@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307030915) do
+ActiveRecord::Schema.define(version: 20170326132643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,15 @@ ActiveRecord::Schema.define(version: 20170307030915) do
     t.index ["card_id"], name: "index_email_templates_on_card_id", using: :btree
   end
 
+  create_table "events", force: :cascade do |t|
+    t.string   "event_type"
+    t.json     "variables"
+    t.integer  "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_events_on_project_id", using: :btree
+  end
+
   create_table "offers", force: :cascade do |t|
     t.float    "win_probability"
     t.json     "instructions"
@@ -63,6 +72,17 @@ ActiveRecord::Schema.define(version: 20170307030915) do
     t.index ["card_id"], name: "index_players_on_card_id", using: :btree
   end
 
+  create_table "projects", force: :cascade do |t|
+    t.string   "name"
+    t.string   "website"
+    t.string   "product_hunt_url"
+    t.integer  "product_hunt_votes"
+    t.integer  "user_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
+  end
+
   create_table "stats", force: :cascade do |t|
     t.string   "stat_type"
     t.string   "ip_address"
@@ -74,6 +94,15 @@ ActiveRecord::Schema.define(version: 20170307030915) do
     t.datetime "updated_at",   null: false
     t.index ["offer_id"], name: "index_stats_on_offer_id", using: :btree
     t.index ["user_id"], name: "index_stats_on_user_id", using: :btree
+  end
+
+  create_table "suggestions", force: :cascade do |t|
+    t.text     "message"
+    t.string   "email_address"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["user_id"], name: "index_suggestions_on_user_id", using: :btree
   end
 
   create_table "teams", force: :cascade do |t|
@@ -106,9 +135,12 @@ ActiveRecord::Schema.define(version: 20170307030915) do
   end
 
   add_foreign_key "email_templates", "cards"
+  add_foreign_key "events", "projects"
   add_foreign_key "offers", "cards"
   add_foreign_key "players", "cards"
+  add_foreign_key "projects", "users"
   add_foreign_key "stats", "offers"
   add_foreign_key "stats", "users"
+  add_foreign_key "suggestions", "users"
   add_foreign_key "users", "teams"
 end
