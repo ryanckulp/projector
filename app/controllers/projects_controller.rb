@@ -10,6 +10,16 @@ class ProjectsController < ApplicationController
     @projects = current_user.projects
   end
 
+  def create
+    @project = current_user.projects.new(project_params)
+
+    if @project.save
+      redirect_to projects_path
+    else
+      render :edit
+    end
+  end
+
   def destroy
     if @project.destroy
       redirect_to projects_path
