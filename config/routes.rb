@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   resources :projects
+  resources :events
+  get 'events/configure', as: 'event_configuration'
 
   devise_for :users, :controllers => {:registrations => "registrations"}
   devise_scope :user do
