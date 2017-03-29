@@ -1,1 +1,55 @@
-configuration instructions here
+<div class="col-md-2"></div>
+<div class="col-md-8">
+<h3>set up a live stream of <strong><%= @project.name %></strong> events.</h3><br><br>
+
+  <h4><strong>step 1 - decide what you want to show</strong></h4>
+  <p>this project currently allows a few event types:</p>
+  <ul>
+    <li>signup</li>
+    <li>upgrade</li>
+    <li>purchase</li>
+    <li>subscribe</li>
+  </ul>
+  <p>when you ping our server with an event as-it-happens, we'll coerce these events into a message like this:</p><br>
+  <p id="event-preview" class="text-center"><i>Someone just signed up for <%= @project.name %><small> 4 minutes ago</small></i></p>
+  <br>
+
+  <h4><strong>step 2 - send a POST request from your project</strong></h4>
+  <p>set up a client or server side callback that pings this app when something happens.</p>
+  <p>here's a sample with your project's <b>client_id</b> included:</p>
+
+  <pre>
+    curl "https://www.projectorfeed.com/api/v1/projects/<%= @project.client_id %>/events"
+        -H "Content-Type: application/json"
+        -d '{"event": {"event_type": "sign up",
+               "variables": [
+                 {"city":"new york"}
+             ]}}'
+        -X POST
+  </pre>
+
+  <p>the payload should be wrapped inside an 'event' object and contain an "event_type" from the list in Step 1.</p>
+  <p>optional: you can also send custom variables, using an array of hashes with the "variables" object.</p>
+  <br>
+
+  <h4><strong>step 3 - create a status message for your news feed</strong></h4>
+  <p><i>note: this is optional</i></p>
+
+  <p>if you took advantage of the custom variables option, here you can configure your message structure:</p>
+
+  <%= simple_form_for(@project) do |f| %>
+    <%= f.input :custom_message, label: false, value: "Someone just {{ event_type }} in {{ your_custom_variable_key_name }}... etc.." %>
+    <%= f.submit 'set message', class: 'btn btn-success pull-right' %>
+  <% end %>
+
+  <p><strong>don't change</strong> the {{ event_type }} variable -- you can put it wherever you want, but it's required.</p>
+  <br>
+
+  <%= link_to 'go back', projects_path, class: 'btn btn-primary' %><br>
+  <small><%= link_to 'get help', 'mailto:ryanckulp@gmail.com?subject=help configuring projector events' %></small>
+
+</div>
+
+<!-- <script>
+  SyntaxHighlighter.all()
+</script> -->
