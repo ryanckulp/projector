@@ -20,6 +20,14 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def update
+    if @project.update(project_params)
+      redirect_to projects_path
+    else
+      redirect_to @project
+    end
+  end
+
   def destroy
     if @project.destroy
       redirect_to projects_path
@@ -35,7 +43,7 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params.require(:project).permit(:name, :website, :product_hunt_url, :avatar_url)
+      params.require(:project).permit(:name, :website, :product_hunt_url, :avatar_url, :custom_message)
     end
 
 end
