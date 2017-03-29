@@ -11,6 +11,8 @@
  * file per style scope.
  *
  * Here you can require css as well as scss
+ *= require syntax-highlighter-rails/shCore
+ *= require syntax-highlighter-rails/shThemeDefault
  */
 
 @import "variables";

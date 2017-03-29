@@ -16,4 +16,6 @@
 //= require twitter/bootstrap
 //= require analytics
 //= require turbolinks
+//= require syntax-highlighter-rails/shCore
+//= require syntax-highlighter-rails/shBrushRuby
 //= require_tree .
