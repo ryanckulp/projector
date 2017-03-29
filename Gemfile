@@ -24,6 +24,8 @@ gem 'bootstrap-sass'
 gem 'seed_dump' # import / export seed data from existing db (https://github.com/rroblak/seed_dump)
 gem 'figaro' # private ENV vars for safe deployment
 gem 'rack-cors', :require => 'rack/cors'
+gem 'curb'
+gem 'syntax-highlighter-rails'
 
 group :development, :test do
   gem 'web-console', '~> 2.0'
