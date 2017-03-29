@@ -1,0 +1,41 @@
+<div class="col-md-3">
+  <div class="project-tile">
+    <h3><%= @user.projects.count %></h3>
+    <p> projects tracked</p>
+  </div>
+</div>
+
+<div class="col-md-3">
+  <div class="project-tile">
+    <h3><%= @events.count %></h3>
+    <p>events in the last 7 days</p>
+  </div>
+</div>
+
+<div class="col-md-3">
+  <div class="project-tile">
+    <h3><%= @user.product_hunt_votes %></h3>
+    <p>product hunt votes</p>
+  </div>
+</div>
+
+<div class="col-md-3">
+  <div class="project-tile">
+    <h3>ZZ</h3>
+    <p>pageviews in the last 7 days</p>
+  </div>
+</div>
+
+<div class="row gap"></div>
+<div class="row gap"></div>
+
+<div class="col-md-6">
+  <table class="table">
+    <thead></thead>
+    <tbody>
+      <% @events.each do |event| %>
+        <tr><td class="event-message"><%= event.message.html_safe %></td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

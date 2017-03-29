@@ -5,7 +5,7 @@
     <div class="project-tile">
       <%= image_tag project.avatar_url, class: 'img img-responsive' if project.avatar_url? %>
       <p><%= project.name %></p>
-      <p><%= link_to "configure", event_configuration_path %>
+      <p><%= fa_icon "cog" %> <%= link_to "configure", event_configuration_path(id: project.id) %>
     </div>
   </div>
 <% end %>
