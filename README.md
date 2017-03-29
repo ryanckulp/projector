@@ -1,2 +1,2 @@
 # Projector
-scratch-off cards for the web.
+venmo feed for your side projects.
