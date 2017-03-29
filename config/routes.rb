@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
   root 'pages#home'
 
+  # Api routes
+  namespace :api do
+    namespace :v1 do
+      post 'projects/:client_id/events', to: "events#create"
+    end
+  end
+
+  get 'feed/:id', to: "feed#index", as: 'feed'
+
   resources :projects
   resources :suggestions
   resources :events
-  get 'events/configure', as: 'event_configuration'
+  get 'events/configure/:id', to: "events#configure", as: 'event_configuration'
 
   devise_for :users, :controllers => {:registrations => "registrations"}
   devise_scope :user do
